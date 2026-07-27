@@ -1,8 +1,9 @@
 from pathlib import Path
 from typing import Any
 
+import json
+import streamlit as st
 import gspread
-
 
 # Folderul în care se află acest fișier
 BASE_DIR = Path(__file__).resolve().parent
@@ -19,13 +20,33 @@ PRODUSE_SHEET = "Produse"
 
 
 def get_client() -> gspread.Client:
-    """Creează conexiunea la Google Sheets."""
-    if not CREDENTIALS_FILE.exists():
-        raise FileNotFoundError(
-            f"Nu am găsit fișierul de autentificare: {CREDENTIALS_FILE}"
+    """Conectare la Google Sheets local sau în Streamlit Cloud."""
+
+    credentials_json = None
+
+    # Încearcă să citească Secrets din Streamlit Cloud
+    try:
+        credentials_json = st.secrets.get("GOOGLE_CREDENTIALS_JSON")
+    except Exception:
+        # Local nu există secrets.toml, deci continuăm cu fișierul JSON
+        credentials_json = None
+
+    if credentials_json:
+        credentials_info = json.loads(credentials_json)
+
+        return gspread.service_account_from_dict(
+            credentials_info
         )
 
-    return gspread.service_account(filename=str(CREDENTIALS_FILE))
+    # Local, pe laptop
+    if CREDENTIALS_FILE.exists():
+        return gspread.service_account(
+            filename=str(CREDENTIALS_FILE)
+        )
+
+    raise FileNotFoundError(
+        "Nu există credențiale Google configurate."
+    )
 
 
 def get_spreadsheet() -> gspread.Spreadsheet:
@@ -49,6 +70,12 @@ def get_products() -> list[dict[str, Any]]:
 
     return worksheet.get_all_records()
 
+def get_records() -> list[dict[str, Any]]:
+    """Citește toate înregistrările din tabul Inregistrari."""
+    spreadsheet = get_spreadsheet()
+    worksheet = spreadsheet.worksheet(INREGISTRARI_SHEET)
+
+    return worksheet.get_all_records()
 
 def get_next_id() -> int:
     """Calculează următorul ID disponibil din tabul Inregistrari."""
