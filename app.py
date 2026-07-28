@@ -52,31 +52,86 @@ total_bidoane = sum(
     for r in records
 )
 
-kpi1, kpi2, kpi3, kpi4 = st.columns(4)
+st.markdown(
+    """
+    <style>
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
 
-with kpi1:
-    st.metric(
-        "🍷 Stoc curent",
-        f"{stoc_curent:,.0f} L",
-    )
+    .kpi-card {
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        border-radius: 12px;
+        padding: 14px 16px;
+        min-width: 0;
+    }
 
-with kpi2:
-    st.metric(
-        "💰 Încasări totale",
-        f"{total_incasari:,.0f} lei",
-    )
+    .kpi-label {
+        font-size: 14px;
+        margin-bottom: 7px;
+        opacity: 0.8;
+        white-space: nowrap;
+    }
 
-with kpi3:
-    st.metric(
-        "🫙 Bidoane",
-        f"{total_bidoane:,}",
-    )
+    .kpi-value {
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1.2;
+        word-break: break-word;
+    }
 
-with kpi4:
-    st.metric(
-        "📝 Înregistrări",
-        len(records),
-    )
+    @media screen and (max-width: 768px) {
+        .kpi-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .kpi-card {
+            padding: 11px 10px;
+            border-radius: 10px;
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            white-space: normal;
+        }
+
+        .kpi-value {
+            font-size: 19px;
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+kpi_html = f"""
+<div class="kpi-grid">
+<div class="kpi-card">
+<div class="kpi-label">🍷 Stoc curent</div>
+<div class="kpi-value">{stoc_curent:,.0f} L</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">💰 Încasări totale</div>
+<div class="kpi-value">{total_incasari:,.0f} lei</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">🫙 Bidoane</div>
+<div class="kpi-value">{total_bidoane:,}</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">📝 Înregistrări</div>
+<div class="kpi-value">{len(records)}</div>
+</div>
+</div>
+"""
+
+st.markdown(kpi_html, unsafe_allow_html=True)
 
 st.markdown(
     "<hr style='margin-top:5px; margin-bottom:15px;'>",
