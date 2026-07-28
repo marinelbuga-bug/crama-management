@@ -123,31 +123,23 @@ st.markdown(
 .st-key-action_buttons div[data-testid="stHorizontalBlock"] {
     flex-wrap: nowrap;
 }
-
-/* Nu permite textului să se rupă pe două rânduri */
-.st-key-action_buttons button,
-.st-key-action_buttons a {
-    white-space: nowrap;
+/* Butoanele Salvează și Istoric */
+.st-key-action_buttons div[data-testid="stHorizontalBlock"] {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
-/* Telefon */
-@media screen and (max-width: 768px) {
-    .st-key-action_buttons div[data-testid="stHorizontalBlock"] {
-        display: flex;
-        flex-direction: row;
-        gap: 12px;
-    }
+.st-key-action_buttons div[data-testid="column"] {
+    width: 50% !important;
+    flex: 1 1 50% !important;
+    min-width: 0 !important;
+}
 
-    .st-key-action_buttons div[data-testid="column"] {
-        width: auto !important;
-        flex: none !important;
-        min-width: 0 !important;
-    }
-
-    /* Ascundem coloana goală din mijloc */
-    .st-key-action_buttons div[data-testid="column"]:nth-child(2) {
-        display: none;
-    }
+.st-key-action_buttons div[data-testid="column"]:last-child {
+    display: flex;
+    justify-content: flex-end;
 }
     </style>
     """,
@@ -257,26 +249,19 @@ with col2:
     )
 
 
-with st.container(key="action_buttons"):
-    col_save, col_space, col_records = st.columns(
-        [1, 7.5, 0.9],
-        gap="small",
+col_save, col_history = st.columns(2)
+
+with col_save:
+    salveaza = st.button(
+        "💾 Salvează",
+        type="primary",
     )
 
-    with col_save:
-        salveaza = st.button(
-            "💾 Salvează",
-            type="primary",
-        )
-
-    with col_space:
-        st.empty()
-
-    with col_records:
-        st.link_button(
-            "📋 Istoric",
-            "https://docs.google.com/spreadsheets/d/1UIUAf1Ajsw3cPyCltQGVxFkVbgiMlnOzbEjGRGqK9Y4/edit",
-        )
+with col_history:
+    st.link_button(
+        "📋 Istoric",
+        "https://docs.google.com/spreadsheets/d/1UIUAf1Ajsw3cPyCltQGVxFkVbgiMlnOzbEjGRGqK9Y4/edit",
+    )
 
 if salveaza:
     if intrare == 0 and iesire == 0 and bani == 0:
