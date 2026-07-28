@@ -4,7 +4,7 @@ from sheets import get_products, get_records, save_record
 
 
 st.set_page_config(
-    page_title="Crama",
+    page_title="Crama cu Noroc",
     page_icon="🍷",
     layout="wide",
 )
@@ -22,7 +22,9 @@ h1 {
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🍷 Evidență Cramă")
+st.markdown("""
+<h1 class="app-title">🍷 Evidență Cramă</h1>
+""", unsafe_allow_html=True)
 
 # ===============================
 # KPI-uri
@@ -133,6 +135,19 @@ st.markdown(
             font-size: 19px;
         }
     }
+    .app-title {
+    margin: 0 0 12px 0;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+@media screen and (max-width: 768px) {
+    .app-title {
+        font-size: 2.2rem;
+        white-space: nowrap;
+    }
+}
     </style>
     """,
     unsafe_allow_html=True,
