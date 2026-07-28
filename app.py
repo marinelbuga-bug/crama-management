@@ -30,11 +30,21 @@ st.title("🍷 Evidență Cramă")
 
 records_all = get_records()
 
-magazin = st.radio(
-    "🏪 Magazin",
-    ["Toate", "Magazin 1", "Magazin 2"],
-    horizontal=True,
-)
+col_magazin, col_istoric = st.columns([4, 1])
+
+with col_magazin:
+    magazin = st.radio(
+        "🏪 Magazin",
+        ["Toate", "Magazin 1", "Magazin 2"],
+        horizontal=True,
+    )
+
+with col_istoric:
+    st.link_button(
+        "📋 Istoric",
+        "https://docs.google.com/spreadsheets/d/1UIUAf1Ajsw3cPyCltQGVxFkVbgiMlnOzbEjGRGqK9Y4/edit",
+        use_container_width=True,
+    )
 
 if magazin == "Toate":
     records = records_all
@@ -119,28 +129,6 @@ st.markdown(
             font-size: 19px;
         }
     }
-    /* Zona celor două butoane */
-.st-key-action_buttons div[data-testid="stHorizontalBlock"] {
-    flex-wrap: nowrap;
-}
-/* Butoanele Salvează și Istoric */
-.st-key-action_buttons div[data-testid="stHorizontalBlock"] {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-}
-
-.st-key-action_buttons div[data-testid="column"] {
-    width: 50% !important;
-    flex: 1 1 50% !important;
-    min-width: 0 !important;
-}
-
-.st-key-action_buttons div[data-testid="column"]:last-child {
-    display: flex;
-    justify-content: flex-end;
-}
     </style>
     """,
     unsafe_allow_html=True,
@@ -249,21 +237,7 @@ with col2:
     )
 
 
-col_save, col_history = st.columns(2)
-
-with col_save:
-    salveaza = st.button(
-        "💾 Salvează",
-        type="primary",
-    )
-
-with col_history:
-    st.link_button(
-        "📋 Istoric",
-        "https://docs.google.com/spreadsheets/d/1UIUAf1Ajsw3cPyCltQGVxFkVbgiMlnOzbEjGRGqK9Y4/edit",
-    )
-
-if salveaza:
+if st.button("💾 Salvează", type="primary"):
     if intrare == 0 and iesire == 0 and bani == 0:
         st.warning(
             "Completează cel puțin o intrare, o ieșire "
