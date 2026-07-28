@@ -34,10 +34,14 @@ col_magazin, col_istoric = st.columns([4, 1])
 
 with col_magazin:
     magazin = st.radio(
-        "🏪 Magazin",
-        ["Toate", "Magazin 1", "Magazin 2"],
-        horizontal=True,
-    )
+    "",
+    ["Toate", "Magazin 1", "Magazin 2"],
+    horizontal=True,
+    label_visibility="collapsed",
+    format_func=lambda x: (
+        "Toate" if x == "Toate" else f"🏪 {x}"
+    ),
+)
 
 with col_istoric:
     st.link_button(
