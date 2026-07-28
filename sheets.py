@@ -100,6 +100,7 @@ def get_next_id() -> int:
 
 
 def save_record(
+    magazin: str,
     data: str,
     produs: str,
     intrare: float,
@@ -122,6 +123,7 @@ def save_record(
     row = [
         record_id,
         data,
+        magazin,
         produs,
         intrare,
         pret_litru,

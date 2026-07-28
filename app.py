@@ -28,27 +28,41 @@ st.title("🍷 Evidență Cramă")
 # KPI-uri
 # ===============================
 
-records = get_records()
+records_all = get_records()
+
+magazin = st.radio(
+    "🏪 Magazin",
+    ["Toate", "Magazin 1", "Magazin 2"],
+    horizontal=True,
+)
+
+if magazin == "Toate":
+    records = records_all
+else:
+    records = [
+        r for r in records_all
+        if str(r.get("Magazin", "")).strip() == magazin
+    ]
 
 total_intrare = sum(
-    float(r.get("Intrare\n(litri)", 0) or 0)
+    float(r.get("Intrare (litri)", 0) or 0)
     for r in records
 )
 
 total_iesire = sum(
-    float(r.get("Iesire\n(litri)\n", 0) or 0)
+    float(r.get("Iesire (litri)", 0) or 0)
     for r in records
 )
 
 stoc_curent = total_intrare - total_iesire
 
 total_incasari = sum(
-    float(r.get("Bani încasati\n(lei)", 0) or 0)
+    float(r.get("Bani încasati (lei)", 0) or 0)
     for r in records
 )
 
 total_bidoane = sum(
-    int(r.get("Nr.\nbidoane", 0) or 0)
+    int(r.get("Nr. bidoane", 0) or 0)
     for r in records
 )
 
@@ -138,8 +152,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.subheader("Adaugă o înregistrare")
+if magazin == "Toate":
+    st.info("Selectează un magazin pentru a adăuga o înregistrare.")
+    st.stop()
 
+st.subheader("Adaugă o înregistrare")
 
 # Citim produsele din Google Sheets
 try:
@@ -168,10 +185,11 @@ with col1:
     data = st.date_input("Data")
 
     intrare = st.number_input(
-        "Intrare (litri)",
-        min_value=0.0,
-        step=1.0,
-    )
+    "Intrare (litri)",
+    min_value=0,
+    step=1,
+    format="%d",
+)
 
     pret = st.number_input(
         "Preț / litru",
@@ -190,8 +208,9 @@ with col2:
 
     iesire = st.number_input(
         "Ieșire (litri)",
-        min_value=0.0,
-        step=1.0,
+        min_value=0,
+        step=1,
+        format="%d",
     )
 
     nr_bidoane = st.number_input(
@@ -202,12 +221,27 @@ with col2:
 
     produs_special = st.number_input(
         "Produs special (litri)",
-        min_value=0.0,
-        step=1.0,
+        min_value=0,
+        step=1,
+        format="%d",
     )
 
 
-if st.button("💾 Salvează", type="primary"):
+col_save, col_records = st.columns([1, 1.2])
+
+with col_save:
+    salveaza = st.button(
+        "💾 Salvează",
+        type="primary",
+    )
+
+with col_records:
+    st.link_button(
+        "📋 Înregistrări",
+        "AICI_PUI_LINKUL_CĂTRE_GOOGLE_SHEET",
+    )
+
+if salveaza:
     if intrare == 0 and iesire == 0 and bani == 0:
         st.warning(
             "Completează cel puțin o intrare, o ieșire "
@@ -217,6 +251,7 @@ if st.button("💾 Salvează", type="primary"):
     else:
         try:
             record_id = save_record(
+                magazin=magazin,
                 data=data.strftime("%d.%m.%Y"),
                 produs=produs,
                 intrare=intrare,
