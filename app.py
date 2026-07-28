@@ -227,7 +227,7 @@ with col2:
     )
 
 
-col_save, col_records = st.columns([1, 1.2])
+col_save, col_space, col_records = st.columns([1, 7.5, 0.8])
 
 with col_save:
     salveaza = st.button(
@@ -235,10 +235,13 @@ with col_save:
         type="primary",
     )
 
+with col_space:
+    st.empty()
+
 with col_records:
     st.link_button(
-        "📋 Înregistrări",
-        "AICI_PUI_LINKUL_CĂTRE_GOOGLE_SHEET",
+        "📋 Istoric",
+        "https://docs.google.com/spreadsheets/d/1UIUAf1Ajsw3cPyCltQGVxFkVbgiMlnOzbEjGRGqK9Y4/edit",
     )
 
 if salveaza:
