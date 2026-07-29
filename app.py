@@ -254,7 +254,7 @@ if not df_chart.empty:
 
         fig_incasari.update_layout(
             title="💰 Încasări lunare",
-            xaxis_title="Luna",
+            xaxis_title="",
             yaxis_title="Lei",
             height=350,
             margin=dict(l=10, r=10, t=50, b=10),
@@ -286,7 +286,7 @@ if not df_chart.empty:
 
         fig_litri.update_layout(
             title="🍷 Litri vânduți lunar",
-            xaxis_title="Luna",
+            xaxis_title="",
             yaxis_title="Litri",
             height=350,
             margin=dict(l=10, r=10, t=50, b=10),
