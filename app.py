@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd
+import plotly.express as px
 
 from sheets import get_products, get_records, save_record
 
@@ -181,6 +183,125 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# ===============================
+# Grafice lunare
+# ===============================
+
+df_chart = pd.DataFrame(records)
+
+if not df_chart.empty:
+
+    df_chart["Data"] = pd.to_datetime(
+        df_chart["Data"],
+        dayfirst=True,
+        errors="coerce",
+    )
+
+    df_chart["Bani încasati (lei)"] = pd.to_numeric(
+        df_chart["Bani încasati (lei)"],
+        errors="coerce",
+    ).fillna(0)
+
+    df_chart["Iesire (litri)"] = pd.to_numeric(
+        df_chart["Iesire (litri)"],
+        errors="coerce",
+    ).fillna(0)
+
+    df_chart = df_chart.dropna(subset=["Data"])
+
+    df_chart["Luna"] = df_chart["Data"].dt.to_period("M").dt.to_timestamp()
+
+    monthly_data = (
+        df_chart.groupby("Luna", as_index=False)
+        .agg(
+            Incasari=("Bani încasati (lei)", "sum"),
+            Litri_vanduti=("Iesire (litri)", "sum"),
+        )
+        .sort_values("Luna")
+    )
+
+    luni = {
+        1: "Ian",
+        2: "Feb",
+        3: "Mar",
+        4: "Apr",
+        5: "Mai",
+        6: "Iun",
+        7: "Iul",
+        8: "Aug",
+        9: "Sep",
+        10: "Oct",
+        11: "Noi",
+        12: "Dec",
+    }
+
+    monthly_data["Luna_afisata"] = monthly_data["Luna"].apply(
+        lambda d: f"{luni[d.month]} {d.year}"
+    )
+
+    st.subheader("📊 Evoluție lunară")
+
+    col_chart1, col_chart2 = st.columns(2)
+
+    with col_chart1:
+
+        fig_incasari = px.bar(
+            monthly_data,
+            x="Luna_afisata",
+            y="Incasari",
+            text_auto=".0f",
+        )
+
+        fig_incasari.update_layout(
+            title="💰 Încasări lunare",
+            xaxis_title="Luna",
+            yaxis_title="Lei",
+            height=350,
+            margin=dict(l=10, r=10, t=50, b=10),
+            bargap=0.60,
+        )
+
+        fig_incasari.update_traces(
+            marker_color="#8B1E3F",
+            hovertemplate="<b>%{x}</b><br>%{y:,.0f} lei<extra></extra>"
+        )
+
+        st.plotly_chart(
+            fig_incasari,
+            use_container_width=True,
+        )
+
+    with col_chart2:
+
+        fig_litri = px.bar(
+            monthly_data,
+            x="Luna_afisata",
+            y="Litri_vanduti",
+            text_auto=".0f",
+        )
+
+        fig_litri.update_layout(
+            title="🍷 Litri vânduți lunar",
+            xaxis_title="Luna",
+            yaxis_title="Litri",
+            height=350,
+            margin=dict(l=10, r=10, t=50, b=10),
+            bargap=0.60,
+        )
+
+        fig_litri.update_traces(
+            marker_color="#8B1E3F",
+            hovertemplate="<b>%{x}</b><br>%{y:,.0f} litri<extra></extra>"
+        )
+
+        st.plotly_chart(
+            fig_litri,
+            use_container_width=True,
+        )
+
+else:
+    st.info("Nu există încă date pentru afișarea graficelor.")
+
 if magazin == "Toate":
     st.info("Selectează un magazin pentru a adăuga o înregistrare.")
     st.stop()
@@ -254,6 +375,7 @@ with col2:
         step=1,
         format="%d",
     )
+
 
 
 if st.button("💾 Salvează", type="primary"):
