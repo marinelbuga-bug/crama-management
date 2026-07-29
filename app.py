@@ -241,74 +241,48 @@ if not df_chart.empty:
 
     st.subheader("📊 Evoluție lunară")
 
-    col_chart1, col_chart2 = st.columns(2)
-
-    with col_chart1:
-
-        fig_incasari = px.bar(
-            monthly_data,
-            x="Luna_afisata",
-            y="Incasari",
-            text_auto=".0f",
-        )
-
-        fig_incasari.update_layout(
-            title="💰 Încasări lunare",
-            xaxis_title="",
-            yaxis_title="Lei",
-            height=350,
-            margin=dict(l=10, r=10, t=50, b=10),
-            bargap=0.80,
-        )
-
-        fig_incasari.update_traces(
-            marker_color="#8B1E3F",
-            hovertemplate="<b>%{x}</b><br>%{y:,.0f} lei<extra></extra>"
-        )
-
-        st.plotly_chart(
-    fig_incasari,
-    use_container_width=True,
-    config={
-        "staticPlot": True,
-        "displayModeBar": False,
-    },
+tip_grafic = st.radio(
+    "",
+    ["💰 Încasări", "🍷 Litri vânduți"],
+    horizontal=True,
+    label_visibility="collapsed",
 )
 
-    with col_chart2:
-
-        fig_litri = px.bar(
-            monthly_data,
-            x="Luna_afisata",
-            y="Litri_vanduti",
-            text_auto=".0f",
-        )
-
-        fig_litri.update_layout(
-            title="🍷 Litri vânduți lunar",
-            xaxis_title="",
-            yaxis_title="Litri",
-            height=350,
-            margin=dict(l=10, r=10, t=50, b=10),
-            bargap=0.80,
-        )
-
-        fig_litri.update_traces(
-            marker_color="#8B1E3F",
-            hovertemplate="<b>%{x}</b><br>%{y:,.0f} litri<extra></extra>"
-        )
-
-        st.plotly_chart(
-    fig_litri,
-    use_container_width=True,
-    config={
-        "staticPlot": True,
-        "displayModeBar": False,
-    },
-)
-
+if tip_grafic == "💰 Încasări":
+    coloana = "Incasari"
+    titlu_axa = "Lei"
 else:
-    st.info("Nu există încă date pentru afișarea graficelor.")
+    coloana = "Litri_vanduti"
+    titlu_axa = "Litri"
+
+fig_evolutie = px.bar(
+    monthly_data,
+    x="Luna_afisata",
+    y=coloana,
+    text=coloana,
+)
+
+fig_evolutie.update_layout(
+    xaxis_title="",
+    yaxis_title=titlu_axa,
+    bargap=0.80,
+    showlegend=False,
+    margin=dict(l=20, r=20, t=20, b=20),
+)
+
+fig_evolutie.update_traces(
+    marker_color="#9B1F45",
+    textposition="inside",
+)
+
+st.plotly_chart(
+    fig_evolutie,
+    use_container_width=True,
+    config={
+        "staticPlot": True,
+        "displayModeBar": False,
+    },
+)
 
 if magazin == "Toate":
     st.info("Selectează un magazin pentru a adăuga o înregistrare.")
