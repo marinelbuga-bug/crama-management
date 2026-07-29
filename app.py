@@ -258,7 +258,7 @@ if not df_chart.empty:
             yaxis_title="Lei",
             height=350,
             margin=dict(l=10, r=10, t=50, b=10),
-            bargap=0.60,
+            bargap=0.80,
         )
 
         fig_incasari.update_traces(
@@ -267,9 +267,13 @@ if not df_chart.empty:
         )
 
         st.plotly_chart(
-            fig_incasari,
-            use_container_width=True,
-        )
+    fig_incasari,
+    use_container_width=True,
+    config={
+        "staticPlot": True,
+        "displayModeBar": False,
+    },
+)
 
     with col_chart2:
 
@@ -286,7 +290,7 @@ if not df_chart.empty:
             yaxis_title="Litri",
             height=350,
             margin=dict(l=10, r=10, t=50, b=10),
-            bargap=0.60,
+            bargap=0.80,
         )
 
         fig_litri.update_traces(
@@ -295,9 +299,13 @@ if not df_chart.empty:
         )
 
         st.plotly_chart(
-            fig_litri,
-            use_container_width=True,
-        )
+    fig_litri,
+    use_container_width=True,
+    config={
+        "staticPlot": True,
+        "displayModeBar": False,
+    },
+)
 
 else:
     st.info("Nu există încă date pentru afișarea graficelor.")
