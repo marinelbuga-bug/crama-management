@@ -13,9 +13,33 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+html,
+body,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+main,
+.block-container {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
 .block-container {
     padding-top: 1rem;
     padding-bottom: 1rem;
+}
+
+iframe {
+    max-width: 100% !important;
+}
+
+div[data-testid="stPlotlyChart"] {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+div[role="radiogroup"] {
+    max-width: 100% !important;
+    flex-wrap: wrap !important;
 }
 
 h1 {
@@ -241,48 +265,53 @@ if not df_chart.empty:
 
     st.subheader("📊 Evoluție lunară")
 
-tip_grafic = st.radio(
-    "",
-    ["💰 Încasări", "🍷 Litri vânduți"],
-    horizontal=True,
-    label_visibility="collapsed",
-)
 
-if tip_grafic == "💰 Încasări":
-    coloana = "Incasari"
-    titlu_axa = "Lei"
-else:
-    coloana = "Litri_vanduti"
-    titlu_axa = "Litri"
 
-fig_evolutie = px.bar(
-    monthly_data,
-    x="Luna_afisata",
-    y=coloana,
-    text=coloana,
-)
+    tip_grafic = st.radio(
+        "",
+        ["💰 Încasări", "🍷 Litri vânduți"],
+        horizontal=True,
+        label_visibility="collapsed",
+    )
 
-fig_evolutie.update_layout(
-    xaxis_title="",
-    yaxis_title=titlu_axa,
-    bargap=0.80,
-    showlegend=False,
-    margin=dict(l=20, r=20, t=20, b=20),
-)
+    if tip_grafic == "💰 Încasări":
+        coloana = "Incasari"
+        titlu_axa = "Lei"
+    else:
+        coloana = "Litri_vanduti"
+        titlu_axa = "Litri"
 
-fig_evolutie.update_traces(
-    marker_color="#9B1F45",
-    textposition="inside",
-)
+    fig_evolutie = px.bar(
+        monthly_data,
+        x="Luna_afisata",
+        y=coloana,
+        text=coloana,
+    )
 
-st.plotly_chart(
-    fig_evolutie,
-    use_container_width=True,
-    config={
-        "staticPlot": True,
-        "displayModeBar": False,
-    },
-)
+    fig_evolutie.update_layout(
+        xaxis_title="",
+        yaxis_title=titlu_axa,
+        bargap=0.80,
+        showlegend=False,
+        margin=dict(l=20, r=20, t=20, b=20),
+    )
+
+    fig_evolutie.update_traces(
+        marker_color="#9B1F45",
+        textposition="inside",
+    )
+
+    st.plotly_chart(
+        fig_evolutie,
+        use_container_width=True,
+        config={
+            "staticPlot": True,
+            "displayModeBar": False,
+            "responsive": True,
+        },
+    )
+
+
 
 if magazin == "Toate":
     st.info("Selectează un magazin pentru a adăuga o înregistrare.")
