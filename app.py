@@ -45,11 +45,49 @@ div[role="radiogroup"] {
 h1 {
     margin-top: 0rem;
 }
+
+.app-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 12px 0;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    overflow: visible;
+}
+
+.app-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    font-size: 0.9em;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .app-title {
+        font-size: 2.2rem !important;
+        line-height: 1.3;
+        white-space: nowrap;
+        margin-top: 0.6rem;
+        margin-bottom: 1rem;
+        padding-top: 0.4rem;
+        overflow: visible;
+    }
+
+    .app-icon {
+        font-size: 0.9em;
+        transform: translateY(0.08rem);
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 
 st.markdown("""
-<h1 class="app-title">🍷 Evidență Cramă</h1>
+<h1 class="app-title">
+    <span class="app-icon">🍷</span>
+    <span>Evidență Cramă</span>
+</h1>
 """, unsafe_allow_html=True)
 
 # ===============================
@@ -161,33 +199,7 @@ st.markdown(
             font-size: 19px;
         }
     }
-    .app-title {
-    margin: 0 0 12px 0;
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1.1;
-}
-
-@media screen and (max-width: 768px) {
-    .app-title {
-        font-size: 2.2rem;
-        white-space: nowrap;
-    }
-}
-
-@media (max-width: 768px) {
-    .app-title {
-        font-size: 2.2rem !important;
-        line-height: 1.3;
-        margin-top: 0.4rem;
-        margin-bottom: 1rem;
-        white-space: nowrap;
-        overflow: visible;
-        padding-top: 0.3rem;
-    }
-}
-
-    </style>
+       </style>
     """,
     unsafe_allow_html=True,
 )
