@@ -177,10 +177,13 @@ st.markdown(
 
 @media (max-width: 768px) {
     .app-title {
-        font-size: 2rem !important;
-        line-height: 1.1;
+        font-size: 2.2rem !important;
+        line-height: 1.3;
+        margin-top: 0.4rem;
         margin-bottom: 1rem;
         white-space: nowrap;
+        overflow: visible;
+        padding-top: 0.3rem;
     }
 }
 
