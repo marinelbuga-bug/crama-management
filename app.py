@@ -174,6 +174,16 @@ st.markdown(
         white-space: nowrap;
     }
 }
+
+@media (max-width: 768px) {
+    .app-title {
+        font-size: 2rem !important;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+        white-space: nowrap;
+    }
+}
+
     </style>
     """,
     unsafe_allow_html=True,
