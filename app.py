@@ -101,7 +101,7 @@ col_magazin, col_istoric = st.columns([4, 1])
 with col_magazin:
     magazin = st.radio(
     "",
-    ["Toate", "Magazin 1", "Magazin 2"],
+    ["Toate", "Mihailesti", "Bragadiru", "Brasov"],
     horizontal=True,
     label_visibility="collapsed",
     format_func=lambda x: (
