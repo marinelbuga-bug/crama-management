@@ -99,14 +99,11 @@ records_all = get_records()
 col_magazin, col_istoric = st.columns([4, 1])
 
 with col_magazin:
-    magazin = st.radio(
+    magazin = st.segmented_control(
     "",
     ["Toate", "Mihailesti", "Bragadiru", "Brasov"],
-    horizontal=True,
+    default="Toate",
     label_visibility="collapsed",
-    format_func=lambda x: (
-        "Toate" if x == "Toate" else f"🏪 {x}"
-    ),
 )
 
 with col_istoric:
