@@ -72,6 +72,9 @@ h1 {
         margin-top: 0.6rem;
         margin-bottom: 1rem;
         padding-top: 0.4rem;
+        justify-content: center !important;
+        width: 100% !important;
+        text-align: center !important;
         overflow: visible;
     }
 
@@ -85,7 +88,7 @@ h1 {
 
 st.markdown("""
 <h1 class="app-title">
-    <span class="app-icon">🍷</span>
+    <span class="app-icon">🍇</span>
     <span>Evidență Cramă</span>
 </h1>
 """, unsafe_allow_html=True)
@@ -98,11 +101,18 @@ records_all = get_records()
 
 magazin = st.segmented_control(
     "",
-    ["Toate", "Mihailesti", "Bragadiru", "Brasov"],
+    ["Toate", "Mihăilești", "Bragadiru", "Brașov"],
     default="Toate",
     label_visibility="collapsed",
     width="stretch",
 )
+magazin_map = {
+    "Mihăilești": "Mihailesti",
+    "Bragadiru": "Bragadiru",
+    "Brașov": "Brasov",
+}
+
+magazin_excel = magazin_map.get(magazin, magazin)
 
 st.link_button(
     "📋 Istoric",
