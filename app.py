@@ -54,30 +54,23 @@ h1 {
     font-size: 3rem;
     font-weight: 700;
     line-height: 1.2;
-    overflow: visible;
+    white-space: nowrap;
 }
 
 .app-icon {
-    display: inline-block;
     flex-shrink: 0;
-    font-size: 0.9em;
-    line-height: 1;
 }
 
 @media (max-width: 768px) {
     .app-title {
-        display: flex !important;
         justify-content: center !important;
-        align-items: center !important;
         width: 100% !important;
+        font-size: 2rem !important;
+        white-space: nowrap !important;
+        flex-wrap: nowrap !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
         text-align: center !important;
-    }
-
-    .app-icon {
-        font-size: 0.9em;
-        transform: translateY(0.08rem);
     }
 }
 </style>
