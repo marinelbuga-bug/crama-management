@@ -55,10 +55,15 @@ h1 {
     font-weight: 700;
     line-height: 1.2;
     white-space: nowrap;
+    overflow: visible;
 }
 
 .app-icon {
     flex-shrink: 0;
+    display: inline-block;
+    line-height: 1.2;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
 }
 
 @media (max-width: 768px) {
@@ -68,9 +73,12 @@ h1 {
         font-size: 2rem !important;
         white-space: nowrap !important;
         flex-wrap: nowrap !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        text-align: center !important;
+        overflow: visible !important;
+    }
+
+    .app-icon {
+        font-size: 0.95em;
+        transform: translateY(0.05rem);
     }
 }
 </style>
