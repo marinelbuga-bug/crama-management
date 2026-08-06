@@ -96,22 +96,19 @@ st.markdown("""
 
 records_all = get_records()
 
-col_magazin, col_istoric = st.columns([4, 1])
-
-with col_magazin:
-    magazin = st.segmented_control(
+magazin = st.segmented_control(
     "",
     ["Toate", "Mihailesti", "Bragadiru", "Brasov"],
     default="Toate",
     label_visibility="collapsed",
+    width="stretch",
 )
 
-with col_istoric:
-    st.link_button(
-        "📋 Istoric",
-        "https://docs.google.com/spreadsheets/d/1UIUAf1Ajsw3cPyCltQGVxFkVbgiMlnOzbEjGRGqK9Y4/edit",
-        use_container_width=True,
-    )
+st.link_button(
+    "📋 Istoric",
+    "https://docs.google.com/spreadsheets/d/1UIUAf1Ajsw3cPyCltQGVxFkVbgiMlnOzbEjGRGqK9Y4/edit",
+    use_container_width=True,
+)
 
 if magazin == "Toate":
     records = records_all
