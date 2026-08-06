@@ -66,16 +66,13 @@ h1 {
 
 @media (max-width: 768px) {
     .app-title {
-        font-size: 2.2rem !important;
-        line-height: 1.3;
-        white-space: nowrap;
-        margin-top: 0.6rem;
-        margin-bottom: 1rem;
-        padding-top: 0.4rem;
+        display: flex !important;
         justify-content: center !important;
+        align-items: center !important;
         width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
         text-align: center !important;
-        overflow: visible;
     }
 
     .app-icon {
