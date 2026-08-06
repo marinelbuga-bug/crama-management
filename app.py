@@ -89,7 +89,7 @@ h1 {
 st.markdown("""
 <h1 class="app-title">
     <span class="app-icon">🍇</span>
-    <span>Evidență Cramă</span>
+    <span>Crama cu Noroc</span>
 </h1>
 """, unsafe_allow_html=True)
 
@@ -125,7 +125,7 @@ if magazin == "Toate":
 else:
     records = [
         r for r in records_all
-        if str(r.get("Magazin", "")).strip() == magazin
+        if str(r.get("Magazin", "")).strip() == magazin_excel
     ]
 
 total_intrare = sum(
@@ -428,7 +428,7 @@ if st.button("💾 Salvează", type="primary"):
     else:
         try:
             record_id = save_record(
-                magazin=magazin,
+                magazin=magazin_excel,
                 data=data.strftime("%d.%m.%Y"),
                 produs=produs,
                 intrare=intrare,
